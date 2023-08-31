@@ -34,10 +34,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.POST, "/api/orders").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(HttpMethod.POST, "/api/orders", "/api/users/**", "/api/v1/email/**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers("/api/orders", "/api/orders/**").hasAuthority(ADMIN)
-                        .requestMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
+                        .requestMatchers("/api/users").hasAuthority(ADMIN)
                         .requestMatchers("/public/**", "/auth/**").permitAll()
                         .requestMatchers("/api-docs/**", "/swagger-ui/**","/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "api-docs","/v3/api-docs/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
