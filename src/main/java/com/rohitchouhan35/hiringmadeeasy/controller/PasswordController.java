@@ -19,7 +19,7 @@ public class PasswordController {
     private UserService userService;
 
     @Autowired
-    public void PasswordEncoder(UserService userService) {
+    public void PasswordController(UserService userService) {
         this.userService = userService;
     }
 
