@@ -78,4 +78,5 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         log.info("Password changed successfully for user: {}", username);
     }
+
 }
