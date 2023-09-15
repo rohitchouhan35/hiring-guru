@@ -1,7 +1,10 @@
 package com.rohitchouhan35.hiringmadeeasy.controller;
 
+import com.rohitchouhan35.hiringmadeeasy.dto.ForgotPasswordRequest;
 import com.rohitchouhan35.hiringmadeeasy.dto.PasswordChangeRequest;
+import com.rohitchouhan35.hiringmadeeasy.dto.PasswordResetRequest;
 import com.rohitchouhan35.hiringmadeeasy.exception.PasswordChangeException;
+import com.rohitchouhan35.hiringmadeeasy.service.ForgotPasswordService;
 import com.rohitchouhan35.hiringmadeeasy.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +20,46 @@ public class PasswordController {
     private static final Logger log = LoggerFactory.getLogger(EmailController.class);
 
     private UserService userService;
+    private ForgotPasswordService forgotPasswordService;
 
     @Autowired
-    public void PasswordController(UserService userService) {
+    public void PasswordController(UserService userService, ForgotPasswordService forgotPasswordService) {
         this.userService = userService;
+        this.forgotPasswordService = forgotPasswordService;
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        String email = forgotPasswordRequest.getEmail();
+        log.info("Received forgot password request for email: {}", email);
+
+        try {
+            forgotPasswordService.initiatePasswordReset(email);
+//            log.info("Password reset email sent successfully to {}", email);
+            return ResponseEntity.ok("Password reset email sent successfully.");
+        } catch (Exception e) {
+            log.error("Failed to initiate password reset for email {}: {}", email, e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to initiate password reset.");
+        }
+    }
+
+//    @RequestParam("token") String token, @RequestParam("password") String newPassword
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) {
+        String token = passwordResetRequest.getToken();
+        String newPassword = passwordResetRequest.getPassword();
+
+        if (forgotPasswordService.isTokenValid(token)) {
+            try {
+                forgotPasswordService.resetPassword(token, newPassword);
+                return ResponseEntity.ok("Password reset successfully");
+            } catch (Exception e) {
+                // Handle exceptions that might occur during password reset
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Password reset failed.");
+            }
+        } else {
+            return ResponseEntity.badRequest().body("Invalid or expired token");
+        }
     }
 
     @PostMapping("/changePassword")

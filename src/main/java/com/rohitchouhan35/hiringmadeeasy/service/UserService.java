@@ -13,6 +13,6 @@ public interface UserService {
     Optional<User> getUserByUsername(String username);
     boolean hasUserWithUsername(String username);
     boolean hasUserWithEmail(String email);
-    public void changePassword(String username, String currentPassword, String newPassword);
+    void changePassword(String username, String currentPassword, String newPassword);
 
 }
