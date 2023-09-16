@@ -32,3 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 rough.txt
+*.properties
+src/main/resources/application.properties
+*.yml
