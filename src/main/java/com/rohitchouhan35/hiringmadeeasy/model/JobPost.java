@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class JobPost {
 
     @Id
@@ -32,7 +33,7 @@ public class JobPost {
     private String videoUrl;
     private String requiredQualifications;
     private String requiredSkills;
-    private List<Applicant> applicantList;
+    private List<Long> applicantList;
 
 }
 
