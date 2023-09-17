@@ -1,10 +1,6 @@
 package com.rohitchouhan35.hiringmadeeasy.model;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +29,8 @@ public class JobPost {
     private String videoUrl;
     private String requiredQualifications;
     private String requiredSkills;
-    private List<Long> applicantList;
+
+    @OneToMany(mappedBy = "jobPost", cascade = CascadeType.ALL)
+    private List<Applicant> applicantList;
 
 }
-
