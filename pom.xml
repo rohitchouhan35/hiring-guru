@@ -89,6 +89,7 @@
 		</dependency>
 
 		<!--aws dependencies-->
+
 		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
 		<dependency>
 			<groupId>com.amazonaws</groupId>
@@ -96,6 +97,21 @@
 			<version>1.12.551</version>
 		</dependency>
 
+
+		<!--redis dependencies-->
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+
+		<!--spring aop-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 
 	</dependencies>
 
