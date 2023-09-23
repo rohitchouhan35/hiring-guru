@@ -1,5 +1,6 @@
 package com.rohitchouhan35.hiringmadeeasy.controller;
 
+import com.rohitchouhan35.hiringmadeeasy.annotations.MeasureExecutionTime;
 import com.rohitchouhan35.hiringmadeeasy.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,6 +17,7 @@ public class StorageController {
     private StorageService service;
 
     @PostMapping("/upload")
+    @MeasureExecutionTime
     public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file) {
         return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
     }

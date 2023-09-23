@@ -1,5 +1,6 @@
 package com.rohitchouhan35.hiringmadeeasy.controller;
 
+import com.rohitchouhan35.hiringmadeeasy.annotations.MeasureExecutionTime;
 import com.rohitchouhan35.hiringmadeeasy.dto.AuthResponse;
 import com.rohitchouhan35.hiringmadeeasy.dto.LoginRequest;
 import com.rohitchouhan35.hiringmadeeasy.dto.SignUpRequest;
@@ -39,6 +40,7 @@ public class AuthController {
     private final TokenProvider tokenProvider;
 
     @PostMapping("/authenticate")
+    @MeasureExecutionTime
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
         log.info("Received login request for user: {}", loginRequest.getUsername());
 

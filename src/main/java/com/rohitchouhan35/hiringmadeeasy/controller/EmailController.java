@@ -24,6 +24,7 @@ public class EmailController {
 
     @PostMapping("/sendEmail")
     public ResponseEntity<String> sendIndividualEmail(@RequestBody SingleEmailRequest emailRequest) {
+        long startTime = System.currentTimeMillis();
         String emailAddress = emailRequest.getEmailAddress();
         String subject = emailRequest.getSubject();
         String body = emailRequest.getBody();
@@ -31,6 +32,7 @@ public class EmailController {
         try {
             emailService.sendEmail(emailAddress, subject, body);
             log.info("Individual email sent to: {}", emailAddress);
+            log.info("sending individual emails completed: " + (System.currentTimeMillis() - startTime));
             return ResponseEntity.ok("Individual email sent.");
         } catch (Exception e) {
             log.error("Error sending individual email to {}: {}", emailAddress, e.getMessage());
@@ -40,6 +42,7 @@ public class EmailController {
 
     @PostMapping("/sendBulkEmails")
     public ResponseEntity<String> sendBulkEmails(@RequestBody BulkEmailRequest bulkEmailRequest) {
+        long startTime = System.currentTimeMillis();
         String subject = bulkEmailRequest.getSubject();
         String body = bulkEmailRequest.getBody();
         // You might want to validate and process template context here
@@ -47,6 +50,7 @@ public class EmailController {
         try {
             emailService.sendBulkEmails(bulkEmailRequest.getUsers(), subject, body);
             log.info("Bulk emails sent to {} users", bulkEmailRequest.getUsers().size());
+            log.info("sending bulk emails completed: " + (System.currentTimeMillis() - startTime));
             return ResponseEntity.ok("Bulk emails sending is done.");
         } catch (Exception e) {
             log.error("Error sending bulk emails: {}", e.getMessage());
